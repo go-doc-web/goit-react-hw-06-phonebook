@@ -8,7 +8,8 @@ import ContactFilter from './ContactFilter/ContactFilter';
 import ContactsForm from './ContactsForm/ContactsForm';
 import ContactItem from './ContactsList/ContactItem/ContactItem';
 
-import { addContact, deleteContact } from 'Redux/actions';
+import { addContact, deleteContact, setfilter } from 'Redux/actions';
+import { getContacts, getFilter } from 'Redux/selectors';
 
 // import contacts from './contacts';
 // import { save, load } from '../utilis/localStorage';
@@ -26,7 +27,8 @@ const styleApp = {
 };
 
 const App = () => {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
 
@@ -34,7 +36,6 @@ const App = () => {
   //   const contacts = JSON.parse(localStorage.getItem('my-contacts'));
   //   return contacts ? contacts : [];
   // });
-  const [filter, setFilter] = useState('');
 
   // useEffect(() => {
   //   localStorage.setItem('my-contacts', JSON.stringify(contacts));
@@ -64,7 +65,9 @@ const App = () => {
     dispatch(action);
   };
 
-  const handlefilterChange = ({ target }) => setFilter(target.value);
+  const handlefilterChange = ({ target }) => {
+    dispatch(setfilter(target.value));
+  };
 
   const getFilterContact = () => {
     if (!filter) {

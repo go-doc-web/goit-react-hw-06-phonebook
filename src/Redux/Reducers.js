@@ -1,4 +1,4 @@
-import { ADD_CONTACT, DELETE_CONTACT } from './types';
+import { ADD_CONTACT, DELETE_CONTACT, SET_FILTER } from './types';
 
 const initialState = {
   contacts: [],
@@ -14,9 +14,16 @@ export const rootReduser = (state = initialState, { type, payload }) => {
         contacts: newContacts,
       };
     case DELETE_CONTACT:
+      const result = state.contacts.filter(contact => contact.id !== payload);
       return {
         ...state,
-        contacts: state.contacts.filter(contact => contact.id !== payload),
+        contacts: result,
+      };
+
+    case SET_FILTER:
+      return {
+        ...state,
+        filter: payload,
       };
 
     default:

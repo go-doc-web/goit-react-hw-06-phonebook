@@ -19,7 +19,7 @@ const ContactFilter = ({ handlefilterChange, filter }) => {
 
 export default ContactFilter;
 
-// ContactFilter.propTypes = {
-//   handlefilterChange: PropTypes.func.isRequired,
-//   filter: PropTypes.string.isRequired,
-// };
+ContactFilter.propTypes = {
+  handlefilterChange: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+};

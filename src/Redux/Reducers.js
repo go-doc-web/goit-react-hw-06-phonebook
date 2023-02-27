@@ -1,15 +1,25 @@
-const initialStateContacts = {
-  contacts: [],
-};
+import { ADD_CONTACT, DELETE_CONTACT } from './types';
 
-const initialStatefilter = {
+const initialState = {
+  contacts: [],
   filter: '',
 };
 
-export const contactsReducer = (state = initialStateContacts, action) => {
-  return state;
-};
+export const rootReduser = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case ADD_CONTACT:
+      const newContacts = [...state.contacts, payload];
+      return {
+        ...state,
+        contacts: newContacts,
+      };
+    case DELETE_CONTACT:
+      return {
+        ...state,
+        contacts: state.contacts.filter(contact => contact.id !== payload),
+      };
 
-export const filterReducer = (state = initialStatefilter, action) => {
-  return state;
+    default:
+      return state;
+  }
 };

@@ -10,4 +10,3 @@ export const getFilteredContacts = ({ contacts, filter }) => {
   });
   return result;
 };
-export const getFilter = ({ filter }) => filter;

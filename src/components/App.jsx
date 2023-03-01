@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import { nanoid } from 'nanoid';
 
@@ -8,8 +8,8 @@ import ContactFilter from './ContactFilter/ContactFilter';
 import ContactsForm from './ContactsForm/ContactsForm';
 import ContactItem from './ContactsList/ContactItem/ContactItem';
 
-import { addContact, deleteContact, setfilter } from 'Redux/actions';
-import { getContacts, getFilter } from 'Redux/selectors';
+import { addContact, deleteContact, setFilter } from 'Redux/actions';
+import { getFilteredContacts, getFilter, getContacts } from 'Redux/selectors';
 
 // import contacts from './contacts';
 // import { save, load } from '../utilis/localStorage';
@@ -27,8 +27,9 @@ const styleApp = {
 };
 
 const App = () => {
-  const contacts = useSelector(getContacts);
+  const filteredContacts = useSelector(getFilteredContacts);
   const filter = useSelector(getFilter);
+  const allContacts = useSelector(getContacts);
 
   const dispatch = useDispatch();
 
@@ -43,7 +44,7 @@ const App = () => {
 
   const dublicate = name => {
     const normalisedName = name.toLocaleLowerCase();
-    const dublContact = contacts.find(
+    const dublContact = allContacts.find(
       ({ name }) => name.toLowerCase() === normalisedName
     );
     return Boolean(dublContact);
@@ -65,22 +66,9 @@ const App = () => {
     dispatch(action);
   };
 
-  const handlefilterChange = ({ target }) => {
-    dispatch(setfilter(target.value));
+  const handleFilterChange = ({ target }) => {
+    dispatch(setFilter(target.value));
   };
-
-  const getFilterContact = () => {
-    if (!filter) {
-      return contacts;
-    }
-    const normalizedFilter = filter.toLowerCase();
-    const result = contacts.filter(({ name }) => {
-      return name.toLowerCase().includes(normalizedFilter);
-    });
-    return result;
-  };
-
-  const filterContacts = getFilterContact();
 
   return (
     <div style={styleApp} className={css.app}>
@@ -95,12 +83,12 @@ const App = () => {
         <div className={css.contacts}>
           <h2>Contacts</h2>
           <ContactFilter
-            handlefilterChange={handlefilterChange}
+            handlefilterChange={handleFilterChange}
             filter={filter}
           />
           <ContactsList>
             <ContactItem
-              items={filterContacts}
+              items={filteredContacts}
               removeContact={onRemoveContact}
             />
           </ContactsList>

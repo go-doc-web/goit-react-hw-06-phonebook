@@ -8,8 +8,14 @@ import ContactFilter from './ContactFilter/ContactFilter';
 import ContactsForm from './ContactsForm/ContactsForm';
 import ContactItem from './ContactsList/ContactItem/ContactItem';
 
-import { addContact, deleteContact, setFilter } from 'Redux/actions';
-import { getFilteredContacts, getFilter, getContacts } from 'Redux/selectors';
+import { addContact, deleteContact } from '../Redux/Contacts/contacts-actions';
+import { setFilter } from '../Redux/Filter/filter-actions';
+import {
+  getFilteredContacts,
+  getContacts,
+} from '../Redux/Contacts/contacts-selectors';
+
+import { getFilter } from '../Redux/Filter/filter-selectors';
 
 // import contacts from './contacts';
 // import { save, load } from '../utilis/localStorage';
@@ -27,9 +33,9 @@ const styleApp = {
 };
 
 const App = () => {
-  const filteredContacts = useSelector(getFilteredContacts);
   const filter = useSelector(getFilter);
   const allContacts = useSelector(getContacts);
+  const filteredContacts = useSelector(getFilteredContacts);
 
   const dispatch = useDispatch();
 

@@ -8,8 +8,8 @@ import ContactFilter from './ContactFilter/ContactFilter';
 import ContactsForm from './ContactsForm/ContactsForm';
 import ContactItem from './ContactsList/ContactItem/ContactItem';
 
-import { addContact, deleteContact } from '../Redux/Contacts/contacts-actions';
-import { setFilter } from '../Redux/Filter/filter-actions';
+import { addContact, deleteContact } from '../Redux/Contacts/contacts-slice';
+import { setFilter } from '../Redux/Filter/filter-slice';
 import {
   getFilteredContacts,
   getContacts,
@@ -23,11 +23,6 @@ import { getFilter } from '../Redux/Filter/filter-selectors';
 import css from './App.module.css';
 
 const styleApp = {
-  // height: '100vh',
-  // display: 'flex',
-  // flexDirection: 'column',
-  // justifyContent: 'center',
-  // alignItems: 'center',
   fontSize: 32,
   color: '#010101',
 };
@@ -38,15 +33,6 @@ const App = () => {
   const filteredContacts = useSelector(getFilteredContacts);
 
   const dispatch = useDispatch();
-
-  // const [contacts, setContacts] = useState(() => {
-  //   const contacts = JSON.parse(localStorage.getItem('my-contacts'));
-  //   return contacts ? contacts : [];
-  // });
-
-  // useEffect(() => {
-  //   localStorage.setItem('my-contacts', JSON.stringify(contacts));
-  // }, [contacts]);
 
   const dublicate = name => {
     const normalisedName = name.toLocaleLowerCase();

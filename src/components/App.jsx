@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
-// import { useState, useEffect } from 'react';
+
 import { useDispatch } from 'react-redux';
-// import { nanoid } from 'nanoid';
 
 import ContactsList from './ContactsList/ContactList';
 import ContactFilter from './ContactFilter/ContactFilter';
@@ -9,16 +8,13 @@ import ContactsForm from './ContactsForm/ContactsForm';
 import ContactItem from './ContactsList/ContactItem/ContactItem';
 
 import { addContact, deleteContact } from '../Redux/Contacts/contacts-slice';
-import { setFilter } from '../Redux/Filter/filter-slice';
+// import { setFilter } from '../Redux/Filter/filter-slice';
 import {
   getFilteredContacts,
   getContacts,
 } from '../Redux/Contacts/contacts-selectors';
 
-import { getFilter } from '../Redux/Filter/filter-selectors';
-
-// import contacts from './contacts';
-// import { save, load } from '../utilis/localStorage';
+// import { getFilter } from '../Redux/Filter/filter-selectors';
 
 import css from './App.module.css';
 
@@ -28,7 +24,7 @@ const styleApp = {
 };
 
 const App = () => {
-  const filter = useSelector(getFilter);
+  // const filter = useSelector(getFilter);
   const allContacts = useSelector(getContacts);
   const filteredContacts = useSelector(getFilteredContacts);
 
@@ -58,9 +54,9 @@ const App = () => {
     dispatch(action);
   };
 
-  const handleFilterChange = ({ target }) => {
-    dispatch(setFilter(target.value));
-  };
+  // const handleFilterChange = ({ target }) => {
+  //   dispatch(setFilter(target.value));
+  // };
 
   return (
     <div style={styleApp} className={css.app}>
@@ -75,8 +71,8 @@ const App = () => {
         <div className={css.contacts}>
           <h2>Contacts</h2>
           <ContactFilter
-            handlefilterChange={handleFilterChange}
-            filter={filter}
+          // handlefilterChange={handleFilterChange}
+          // filter={filter}
           />
           <ContactsList>
             <ContactItem

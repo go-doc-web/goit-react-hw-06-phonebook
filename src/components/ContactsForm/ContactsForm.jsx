@@ -1,26 +1,49 @@
-import PropTypes from 'prop-types';
-// import { Component } from 'react';
-// import { useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'Redux/Contacts/contacts-slice';
 
-import initialState from './initialState';
-import useForm from '../../shared/hooks/useForm';
+import { getContacts } from '../../Redux/Contacts/contacts-selectors';
 
 import css from './ContactsForm.module.css';
 
-const ContactsForm = ({ onSubmit }) => {
-  const { state, handleSubmit, handleChange } = useForm({
-    initialState,
-    onSubmit,
-  });
+const ContactsForm = () => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  const { name, number } = state;
+  const allContacts = useSelector(getContacts);
+
+  const dispatch = useDispatch();
+
+  const handleReset = () => {
+    setName('');
+    setNumber('');
+  };
+  const dublicate = name => {
+    const normalisedName = name.toLocaleLowerCase();
+    const dublContact = allContacts.find(
+      ({ name }) => name.toLowerCase() === normalisedName
+    );
+    return Boolean(dublContact);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const newContacts = { name, number };
+    if (dublicate(name)) {
+      alert(`${name} is already in contacts`);
+      handleReset();
+      return;
+    }
+    dispatch(addContact(newContacts));
+    handleReset();
+  };
 
   return (
     <form onSubmit={handleSubmit} className={css.form}>
       <label className={css.titleInputForm}>
         <span>Name</span>
         <input
-          onChange={handleChange}
+          onChange={e => setName(e.target.value)}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -33,7 +56,7 @@ const ContactsForm = ({ onSubmit }) => {
       <label className={css.titleInputForm}>
         <span>Number</span>
         <input
-          onChange={handleChange}
+          onChange={e => setNumber(e.target.value)}
           type="tel"
           name="number"
           value={number}
@@ -49,73 +72,3 @@ const ContactsForm = ({ onSubmit }) => {
 };
 
 export default ContactsForm;
-
-ContactsForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
-
-/*class ContactsForm extends Component {
-  state = { ...initialState };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const { onSubmit } = this.props;
-    onSubmit({ ...this.state });
-    this.reset();
-  };
-
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  reset() {
-    this.setState({ ...initialState });
-  }
-
-  render() {
-    const { handleChange, handleSubmit } = this;
-    const { name, number } = this.state;
-
-    return (
-      <form onSubmit={handleSubmit} className={css.form}>
-        <label className={css.titleInputForm}>
-          <span>Name</span>
-          <input
-            onChange={handleChange}
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            value={name}
-            placeholder="Fedor Fedorov"
-          />
-        </label>
-        <label className={css.titleInputForm}>
-          <span>Number</span>
-          <input
-            onChange={handleChange}
-            type="tel"
-            name="number"
-            value={number}
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            placeholder="227-91-26"
-          />
-        </label>
-        <button type="submit">Add contact</button>
-      </form>
-    );
-  }
- }*/
-
-// export default ContactsForm;
-
-// ContactsForm.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };

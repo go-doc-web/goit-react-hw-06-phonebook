@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
@@ -30,8 +29,3 @@ const ContactFilter = () => {
 };
 
 export default ContactFilter;
-
-ContactFilter.propTypes = {
-  handlefilterChange: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
-};

@@ -31,7 +31,7 @@ const ContactsForm = () => {
     const newContacts = { name, number };
     if (dublicate(name)) {
       alert(`${name} is already in contacts`);
-      handleReset();
+      // handleReset();
       return;
     }
     dispatch(addContact(newContacts));
